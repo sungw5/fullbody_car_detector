@@ -1,11 +1,30 @@
 import cv2
 
-imgFile = 'https://www.gannett-cdn.com/-mm-/333c1271c2393e4d5375c5f38ce5fedd5ad275a2/c=0-122-2400-1478/local/-/media/2018/06/25/USATODAY/USATODAY/636655326420239659-PedestrianDeath-crossing-Gratiot2.jpg'
+imgFile = './carsss.jpg'
 
 img = cv2.imread(imgFile)
+trainedData = './cars.xml'
+
+
+
+
+grayscaledImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+carDetector = cv2.CascadeClassifier(trainedData)
+
+carCoordinates = carDetector.detectMultiScale(grayscaledImg)
+
+for i in range(len(carCoordinates)):
+    (x, y, w, h) = carCoordinates[i]
+    cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2) # imgfile, coordinates1, coordinates2, color, thickness
+    print("x: ", x, "y: ", y, "width from offset: ", w, "height from offset: ", h)
+
 
 
 cv2.imshow("Cars", img)
+
+cv2.waitKey()
+
+
 
 
 print("Tyler's car detection")
