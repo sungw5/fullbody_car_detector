@@ -8,6 +8,7 @@ carDetector = cv2.CascadeClassifier(trainedData)
 
 videoCapture = cv2.VideoCapture('./testvideo.mp4')
 
+
 while True:
     ret, frame = videoCapture.read()
 
@@ -15,28 +16,24 @@ while True:
         grayscaled = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     else:
         break
-
-    cv2.imshow('Video', grayscaled) #display
-    cv2.waitKey(1)
-
-
-    # grayscaled = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
     
+    carCoordinates = carDetector.detectMultiScale(grayscaled)
 
-    # carCoordinates = carDetector.detectMultiScale(grayscaled)
 
-    # for i in range(len(carCoordinates)):
-    #     (x, y, w, h) = carCoordinates[i]
-    #     cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) # imgfile, coordinates1, coordinates2, color, thickness
-    #     print("x: ", x, "y: ", y, "width from offset: ", w, "height from offset: ", h)
+    for i in range(len(carCoordinates)):
+        (x, y, w, h) = carCoordinates[i]
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) # imgfile, coordinates1, coordinates2, color, thickness
+        # print("x: ", x, "y: ", y, "width from offset: ", w, "height from offset: ", h)
 
-    # cv2.imshow('Video', frame) #display
 
-    # if cv2.waitKey(1) & 0xFF == ord('q'):
-    #     break
+    cv2.imshow('Video', frame) #display
+    # cv2.waitKey(1)
 
-    # videoCapture.release()
-    # cv2.destroyAllWindows()
+    if cv2.waitKey(1) & 0xFF == ord('q'):
+        break
+
+videoCapture.release()
+cv2.destroyAllWindows()
 
 
 
