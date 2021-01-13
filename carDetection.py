@@ -3,13 +3,13 @@ import cv2
 # imgFile = './car2.jpg'
 # img = cv2.imread(imgFile)
 
-trainedDataCar = './cars.xml'
-trainedDataBody = './haarcascade_fullbody.xml'
+trainedDataCar = './data/cars.xml'
+trainedDataBody = './data/haarcascade_fullbody.xml'
 
 carDetector = cv2.CascadeClassifier(trainedDataCar)
 bodyDetector = cv2.CascadeClassifier(trainedDataBody)
 
-videoCapture = cv2.VideoCapture('./testvideo2withpeople.mp4')
+videoCapture = cv2.VideoCapture('./sample/testvideo2withpeople.mp4')
 
 
 while True:
