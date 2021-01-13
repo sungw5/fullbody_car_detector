@@ -1,28 +1,43 @@
 import cv2
 
-imgFile = './carsss.jpg'
+# imgFile = './car2.jpg'
+# img = cv2.imread(imgFile)
 
-img = cv2.imread(imgFile)
 trainedData = './cars.xml'
-
-
-
-
-grayscaledImg = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 carDetector = cv2.CascadeClassifier(trainedData)
 
-carCoordinates = carDetector.detectMultiScale(grayscaledImg)
+videoCapture = cv2.VideoCapture('./testvideo.mp4')
 
-for i in range(len(carCoordinates)):
-    (x, y, w, h) = carCoordinates[i]
-    cv2.rectangle(img, (x, y), (x+w, y+h), (0, 255, 0), 2) # imgfile, coordinates1, coordinates2, color, thickness
-    print("x: ", x, "y: ", y, "width from offset: ", w, "height from offset: ", h)
+while True:
+    ret, frame = videoCapture.read()
+
+    if ret:
+        grayscaled = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    else:
+        break
+
+    cv2.imshow('Video', grayscaled) #display
+    cv2.waitKey(1)
 
 
+    # grayscaled = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
+    
 
-cv2.imshow("Cars", img)
+    # carCoordinates = carDetector.detectMultiScale(grayscaled)
 
-cv2.waitKey()
+    # for i in range(len(carCoordinates)):
+    #     (x, y, w, h) = carCoordinates[i]
+    #     cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) # imgfile, coordinates1, coordinates2, color, thickness
+    #     print("x: ", x, "y: ", y, "width from offset: ", w, "height from offset: ", h)
+
+    # cv2.imshow('Video', frame) #display
+
+    # if cv2.waitKey(1) & 0xFF == ord('q'):
+    #     break
+
+    # videoCapture.release()
+    # cv2.destroyAllWindows()
+
 
 
 
