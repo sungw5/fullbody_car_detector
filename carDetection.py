@@ -3,10 +3,13 @@ import cv2
 # imgFile = './car2.jpg'
 # img = cv2.imread(imgFile)
 
-trainedData = './cars.xml'
-carDetector = cv2.CascadeClassifier(trainedData)
+trainedDataCar = './cars.xml'
+trainedDataBody = './haarcascade_fullbody.xml'
 
-videoCapture = cv2.VideoCapture('./testvideo.mp4')
+carDetector = cv2.CascadeClassifier(trainedDataCar)
+bodyDetector = cv2.CascadeClassifier(trainedDataBody)
+
+videoCapture = cv2.VideoCapture('./testvideo2withpeople.mp4')
 
 
 while True:
@@ -18,12 +21,17 @@ while True:
         break
     
     carCoordinates = carDetector.detectMultiScale(grayscaled)
+    bodyCoordinates = bodyDetector.detectMultiScale(grayscaled)
 
 
     for i in range(len(carCoordinates)):
         (x, y, w, h) = carCoordinates[i]
-        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) # imgfile, coordinates1, coordinates2, color, thickness
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 0, 255), 3) # imgfile, coordinates1, coordinates2, color, thickness
         # print("x: ", x, "y: ", y, "width from offset: ", w, "height from offset: ", h)
+
+    for j in range(len(bodyCoordinates)):
+        (x, y, w, h) = bodyCoordinates[j]
+        cv2.rectangle(frame, (x, y), (x+w, y+h), (0, 255, 0), 2) # imgfile, coordinates1, coordinates2, color, thickness
 
 
     cv2.imshow('Video', frame) #display
@@ -36,7 +44,4 @@ videoCapture.release()
 cv2.destroyAllWindows()
 
 
-
-
-
-print("Tyler's car detection")
+print("********* End the video *********")
